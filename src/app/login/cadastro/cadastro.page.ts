@@ -12,7 +12,6 @@ import { AngularFirestore } from '../../../../node_modules/@angular/fire/firesto
 //import { File } from '@ionic-native/file/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 
 @Component({
