@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar color="laranja">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Area de cadastros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="fundo">
+
+  <ion-segment [(ngModel)]="segmento" color="laranja" scrollable>
+    <ion-segment-button value="produtos">
+      <ion-label class="fonteseg">Produto</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="categoria">
+      <ion-label class="fonteseg">Categoria</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="subCategoria">
+      <ion-label class="fonteseg">Sub-Categoria</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="bar">
+      <ion-label class="fonteseg">Bar</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segmento">
+
+    <ion-list color="fundo" *ngSwitchCase="'produtos'">
+
+      <ion-card *ngIf="fileObj" (click)="pickFile()">
+        <img src={{fileObj.dataURI}}>
+      </ion-card> 
+
+      <div class="margin">
+        <ion-item color="fundo">
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input color="fundo" class="fonteseg" type="text" [(ngModel)]="produto.nome"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label>Categoria</ion-label>
+          <ion-select color="fundo" [(ngModel)]="produto.nomeCat">
+            <ion-select-option *ngFor="let cat of cats">{{cat.nomeCat}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label>Sub-categoria</ion-label>
+          <ion-select color="fundo" [(ngModel)]="produto.subCategoria">
+            <ion-select-option *ngFor="let sub of subs">{{sub.subCategoria}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label>Foto</ion-label>
+          <ion-icon (click)="pickFile()" name="images" slot="end"  ></ion-icon>
+        </ion-item>
+        <!-- [(ngModel)]="produto.imagem" -->
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Valor</ion-label>
+          <ion-input color="fundo" class="fonteseg" type="text" [(ngModel)]="produto.valor"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label>Bar</ion-label>
+          <ion-select color="fundo" [(ngModel)]="produto.nomeBar">
+            <ion-select-option *ngFor="let bar of bares">{{bar.nomeBar}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button (click)="salvarProd()" color="laranja" expand="block">
+          Salvar produto
+        </ion-button>
+      </div>
+
+    </ion-list>
+
+    <ion-list color="fundo" *ngSwitchCase="'categoria'">
+
+      <div class="margin">
+        <ion-item color="fundo">
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="cat.nomeCat"></ion-input>
+        </ion-item>
+
+        <ion-button color="laranja" expand="block" (click)="salvarCat()">
+          Salvar categoria
+        </ion-button>
+      </div>
+
+    </ion-list>
+
+    <ion-list color="fundo" *ngSwitchCase="'subCategoria'">
+
+      <div class="margin">
+        <ion-item color="fundo">
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="sub.subCategoria"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label>Categoria</ion-label>
+          <ion-select color="fundo" [(ngModel)]="sub.nomeCat">
+            <ion-select-option *ngFor="let cat of cats">{{cat.nomeCat}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button color="laranja" expand="block" (click)="salvarSubCat()">
+          Salvar Sub-Categoria
+        </ion-button>
+      </div>
+
+    </ion-list>
+
+    <ion-list color="fundo" *ngSwitchCase="'bar'">
+
+      <div class="margin">
+        <ion-item color="fundo">
+          <ion-label position="floating">Id</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.idBar"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.nomeBar"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Descrição</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.desc"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Telefone</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.telefone"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Horario</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.horario"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Imagem</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.imagem"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Rua</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.rua"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Numero</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.numero"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Bairro</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.bairro"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Latitude</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.lat"></ion-input>
+        </ion-item>
+
+        <ion-item color="fundo">
+          <ion-label position="floating">Longitude</ion-label>
+          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.long"></ion-input>
+        </ion-item>
+
+        <ion-button color="laranja" expand="block" (click)="salvarBar()">Salvar bar</ion-button>
+      </div>
+
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="laranja">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Comparar Preços</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="fundo">
+  <h2>Compare os precos das bebidas</h2>
+
+  <ion-card>
+    <img [src]="produto.imagem">
+  </ion-card>
+
+  <h6>{{produto.nome}}</h6>
+
+  <ion-list color="fundo">
+    <ion-item color="fundo">
+      <ion-label>{{produto.nomeBar}}</ion-label>
+      <ion-badge color="laranja" slot="end">{{produto.valor | currency: 'BRL'}}</ion-badge>
+    </ion-item>
+
+
+    <ion-item color="fundo">
+      <ion-label>Nome do Bar</ion-label>
+      <ion-badge color="laranja" slot="end">valor</ion-badge>
+    </ion-item>
+    <ion-item color="fundo">
+      <ion-label>Nome do Bar</ion-label>
+      <ion-badge color="laranja" slot="end">valor</ion-badge>
+    </ion-item>
+    <ion-item color="fundo">
+      <ion-label>Nome do Bar</ion-label>
+      <ion-badge color="laranja" slot="end">valor</ion-badge>
+    </ion-item>
+    <ion-item color="fundo">
+      <ion-label>Nome do Bar</ion-label>
+      <ion-badge color="laranja" slot="end">valor</ion-badge>
+    </ion-item>
+    <ion-item color="fundo">
+      <ion-label>Nome do Bar</ion-label>
+      <ion-badge color="laranja" slot="end">valor</ion-badge>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="laranja">
+    <ion-buttons slot="end">
+      <h3>
+        <ion-icon (click)="limpar()" class="icon" name="trash"></ion-icon>
+      </h3>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Calculadora</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="fundo">
+  <ion-item-sliding color="fundo" *ngFor="let prod of carrinho; let i = index">
+    <ion-item color="fundo">
+      <ion-thumbnail slot="start">
+        <img [src]="prod.imagem">
+      </ion-thumbnail>
+      <ion-label>
+        <div>
+          <strong>{{prod.nome}}</strong>
+          <p>
+            <small>Qtde: </small> {{prod.quantidade}}<strong> * </strong>
+            <small class="font-valor">{{prod.valor | currency: 'BRL'}}</small>
+          </p>
+        </div>
+      </ion-label>
+      <ion-badge color="laranja">{{(prod.quantidade * prod.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) }}</ion-badge>
+    </ion-item>
+
+    <!-- {{(parseFloat(prod.quantidade) * parseFloat(prod.valor)).toFixed(2)}} -->
+
+    <ion-item-options side="end">
+      <ion-item-option (click)="removeItem(prod)" color="danger">
+        <h3>
+          <ion-icon slot="start" name="trash"></ion-icon>
+        </h3>
+        Apagar
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="laranja">
+    <ion-title>
+      TOTAL
+    </ion-title>
+    <ion-note color="fundo" slot="end">{{totalProduto().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
+      }}</ion-note>
+  </ion-toolbar>
+
+</ion-footer>

@@ -1,0 +1,57 @@
+<ion-header>
+
+</ion-header>
+
+<ion-content color="fundo">
+  <div class="bg-login">
+    <div class="overlay">
+      <div class="logo">
+        <img src="../assets/icon/logo.png" />
+      </div>
+
+      <div class="padding">
+        <ion-item class="bg-transparente no-padding" color="imput">
+          <ion-label position="floating">Usuário:</ion-label>
+          <ion-input [(ngModel)]="userLogin.usuario" class="bg-transparente" type="text" required="true"
+            requiredMessage="Informe o Nome do Usuário"></ion-input>
+        </ion-item>
+
+        <ion-item class="bg-transparente" color="imput">
+          <ion-label position="floating">Senha:</ion-label>
+          <ion-input [(ngModel)]="userLogin.senha" class="bg-transparente" type="password" maxlength="8" required="true"
+            requiredMessage="Informe a Senha"></ion-input>
+        </ion-item>
+        <div *ngIf="userLogin.senha">
+          <p class="texto top">
+            <span (click)="resetSenha()" class="desc">Esqueceu sua senha?</span>
+          </p>
+        </div>
+        <p class="texto top">Não é registrado?
+          <span routerLink='/cadastro' class="desc">Crie uma conta</span>
+        </p>
+
+        <ion-button color="laranja" class="botaoEntrar" expand="block" fill="outline" (click)="login()">Entrar</ion-button>
+
+        <p class="texto">Ou conectar via</p>
+
+        <div class="logo">
+          <ion-fab-button class="flutuar btn1" color="gmail">
+            <h1>
+              <ion-icon name="logo-google"></ion-icon>
+            </h1>
+          </ion-fab-button>
+
+          <ion-fab-button (click)="loginFacebook()" class="flutuar btn2" color="facebook">
+            <h1>
+              <ion-icon name="logo-facebook"></ion-icon>
+            </h1>
+          </ion-fab-button>
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+</ion-content>

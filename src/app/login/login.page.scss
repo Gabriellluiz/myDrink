@@ -1,0 +1,84 @@
+
+.espaco-acima{
+    margin-top: 17px;
+}
+
+.top{
+    margin-top: 15px;
+}
+
+.espaco-esquerda{
+    margin-left: 15px;
+}
+
+img{
+	max-width:100%;
+	height:auto;
+}
+
+.logo{
+    position:relative;
+    max-width: 300px;
+    height:auto;
+    margin:0 auto;
+}
+
+.bg-login{
+    height: 100%;
+    background-image: url('/assets/icon/fundo.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+.bg-transparente{
+    background-color: transparent;
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #000, transparent);
+    overflow-x: hidden;
+}
+
+.texto{
+    text-align: center;
+    font-size: 14px;
+}
+
+.padding{
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 10px;
+    padding-bottom: 35px;
+}
+
+.no-padding{
+    padding: 0px;
+}
+
+.botaoEntrar{
+    margin-top: 10px;
+}
+
+.desc{
+    color: #ff8600;
+}
+
+.flutuar{
+    float:left;
+}
+
+.btn1{
+    margin-left: 30%;
+    width: 50px;
+    height: 50px;
+}
+
+.btn2{
+    margin-left: 19px;
+    width: 50px;
+    height: 50px;
+}
+

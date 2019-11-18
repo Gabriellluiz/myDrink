@@ -1,0 +1,84 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+.list-md{
+    background: transparent;
+}
+
+
+.fundo-menu{
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/icon/fundo-menu.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+ion-title{
+    font-family: 'My Custom Font';
+  }
+
+.toolbarMenu{
+    background: #212121;
+    border: #fff; 
+}
+
+.itemMenu{
+    color: #fff;
+}
+
+.avatarMenu{
+    margin-left: 11px;
+    width: 48px;
+    height: 48px;
+    background: #fff;    
+}
+
+
+.h2Menu{
+    text-align: center;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.pMenu{
+    margin-top: -4px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: normal;
+    color:#fff;
+    
+}
+
+.divMenu{
+    margin-top: -11px;
+}
+
+.labelMenu{
+    font-size: 20px;
+    text-align: center;
+    font-family: 'My Custom Font';
+    color:#fff;
+}
+
+.tituloPopUp{
+    text-align: center;
+}
+
+.labelEnder{
+    font-size: 15;
+}
+
+.labelTel{
+    font-size: 14px
+}
