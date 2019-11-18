@@ -8,7 +8,7 @@ import { DadosBarService } from './servicos/dados.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { UsuarioService } from './servicos/usuario.service';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { Subscription } from 'rxjs';
 import { User } from './interfaces/user';
 
@@ -20,7 +20,7 @@ export class AppComponent {
   public dadosFB: any;
   private loading: any;
   private usersSubscription: Subscription;
-  public user = firebase.auth().currentUser; 
+  public user = firebase.auth().currentUser;
   public users = new Array<User>();
   public usuario;
 
@@ -54,21 +54,20 @@ export class AppComponent {
     private userService: UsuarioService
   ) {
     this.initializeApp();
-
+    console.log("alguma coisa",this.user);
 
     if (this.user != null) {
-      this.user.providerData.forEach(function (user) {
-        console.log("Sign-in provider: " + user.providerId);
-        console.log("  Provider-specific UID: " + user.uid);
-        console.log("  Name: " + user.displayName);
-        console.log("  Email: " + user.email);
-        console.log("  Photo URL: " + user.photoURL);
+      this.user.providerData.forEach(function (profile) {
+        console.log("Sign-in provider: " + profile.providerId);
+        console.log("  Provider-specific UID: " + profile.uid);
+        console.log("  Name: " + profile.displayName);
+        console.log("  Email: " + profile.email);
+        console.log("  Photo URL: " + profile.photoURL);
       });
     }
 
     this.usersSubscription = this.userService.getUsers().subscribe(data => {
       this.users = data;
-      console.log(this.users)
     });
 
    

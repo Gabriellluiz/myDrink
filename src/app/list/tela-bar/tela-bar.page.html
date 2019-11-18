@@ -36,18 +36,11 @@
   </ion-list>
   <!--Fim dados BAR-->
 
-
-  <!--inicio do tipo de produto -->
-  <ion-segment [(ngModel)]="segmento" color="laranja" scrollable>
-    <ion-segment-button *ngFor="let cat of categorias " value="{{cat.nomeCat}}">
-      <ion-label class="cor-fonte">{{cat.nomeCat}}</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <!--Fim do tipo de produto-->
+  <h6>Tipos de bebidas</h6>
 
 
   <!-- Tipo de Bebidas -->
-  <ion-segment *ngIf="segmento === 'Bebidas'" [(ngModel)]="segmentoTipo" color="laranja" scrollable>
+  <ion-segment  [(ngModel)]="segmentoTipo" color="laranja" scrollable>
     <ion-segment-button *ngFor="let sub of subcats" value="{{sub.subCategoria}}">
       <ion-label class="tipoBebida">{{sub.subCategoria}}</ion-label>
     </ion-segment-button>
@@ -85,35 +78,5 @@
 
   </div>
 
-  <div [ngSwitch]="segmento">
-
-    <div *ngFor="let cat of categorias">
-      <ion-list color="fundo" *ngSwitchCase="cat.nomeCat">
-        <div *ngFor="let prod of prods">
-          <ion-item-sliding color="fundo" *ngIf="(prod.nomeBar === bar.nomeBar) && (prod.nomeCat == cat.nomeCat)">
-            <ion-item button [routerLink]="['/comparar', prod.id]" color="fundo">
-              <ion-thumbnail slot="start">
-                <img [src]="prod.imagem">
-              </ion-thumbnail>
-              <ion-label>
-                {{ prod.nome }}
-              </ion-label>
-              <ion-badge color="laranja">{{ prod.valor | currency: 'BRL' }}</ion-badge>
-            </ion-item>
-
-            <ion-item-options side="end">
-              <ion-item-option (click)="addCarrinhoToast(prod)" color="light">
-                <h3>
-                  <ion-icon slot="start" name="calculator"></ion-icon>
-                </h3>
-                Calculadora
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </div>
-      </ion-list>
-    </div>
-    
-  </div>
-
+ 
 </ion-content>
