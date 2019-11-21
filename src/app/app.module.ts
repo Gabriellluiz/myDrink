@@ -22,8 +22,9 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx'
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Chooser } from '@ionic-native/chooser/ngx';
-//import { Camera } from '@ionic-native/camera/ngx';
-//import { File } from '@ionic-native/file/ngx';
+
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,9 +48,9 @@ import { Chooser } from '@ionic-native/chooser/ngx';
     GooglePlus,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     DadosBarService,
-    SocialSharing
-    //Camera,
-    //File
+    SocialSharing,
+    Camera,
+    File
     
   ],
   bootstrap: [AppComponent]

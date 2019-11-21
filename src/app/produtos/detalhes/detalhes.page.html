@@ -28,8 +28,8 @@
 
     <ion-list color="fundo" *ngSwitchCase="'produtos'">
 
-      <ion-card *ngIf="fileObj" (click)="pickFile()">
-        <img src={{fileObj.dataURI}}>
+      <ion-card *ngIf="downloadUrl | async" (click)="abrirGaleria()">
+        <img [src]="downloadUrl | async" />
       </ion-card> 
 
       <div class="margin">
@@ -54,9 +54,10 @@
 
         <ion-item color="fundo">
           <ion-label>Foto</ion-label>
-          <ion-icon (click)="pickFile()" name="images" slot="end"  ></ion-icon>
+          <ion-icon (click)="abrirGaleria()" name="images" slot="end"  ></ion-icon>
+          <!-- <p [(ngModel)]="produto.imagem" >{{downloadUrl | async}}</p> -->
         </ion-item>
-        <!-- [(ngModel)]="produto.imagem" -->
+        
 
         <ion-item color="fundo">
           <ion-label position="floating">Valor</ion-label>

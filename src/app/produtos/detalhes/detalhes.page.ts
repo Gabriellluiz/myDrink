@@ -13,6 +13,13 @@ import { Categoria } from 'src/app/interfaces/categoria';
 import { Subcategoria } from 'src/app/interfaces/subcategoria';
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Platform } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-detalhes',
@@ -21,6 +28,8 @@ import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 })
 export class DetalhesPage implements OnInit {
   public fileObj: ChooserResult;
+  public porcentUp: Observable<number>;
+  public downloadUrl: Observable<string>;
   private loading: any;
   
   private produto: Produtos= {};
@@ -54,7 +63,11 @@ export class DetalhesPage implements OnInit {
     private catService: CategoriaService,
     private subCatService: SubcategoriaService,
     private navCtrl: NavController,
-    public router: Router
+    public router: Router,
+    private camera: Camera,
+    private platform: Platform,
+    private file: File,
+    private afStorage: AngularFireStorage
   ) { 
 
     this.barId = this.activatedRoute.snapshot.params['idBar'];
@@ -244,16 +257,59 @@ export class DetalhesPage implements OnInit {
     return this.loading.present();
   }
 
+  async abrirGaleria(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true
+    };
+
+    try{
+      const fileUrl: string = await this.camera.getPicture(options);
+
+      let file: string;
+
+      if(this.platform.is('ios')){
+        file = fileUrl.split('/').pop();
+      }else {
+        file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
+      }
+
+      const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
+
+      const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
+      const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
+      
+      this.uploadFoto(blob);
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+
+  uploadFoto(blob: Blob){
+    const ref = this.afStorage.ref('Produtos/' + this.createFileName());
+    const task = ref.put(blob);
+
+    this.porcentUp = task.percentageChanges();
+    task. snapshotChanges().pipe(
+      finalize(() => this.downloadUrl = ref.getDownloadURL())
+    ).subscribe();
+  }
+
+  createFileName() {
+    var d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+
+
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({ message, duration: 2000 });
     toast.present();
   }
-
-   
-
- 
-
-
 
   public segmento: string = 'produtos';
   /**
