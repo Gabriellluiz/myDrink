@@ -30,7 +30,7 @@
 
       <ion-card *ngIf="downloadUrl | async" (click)="abrirGaleria()">
         <img [src]="downloadUrl | async" />
-      </ion-card> 
+      </ion-card>
 
       <div class="margin">
         <ion-item color="fundo">
@@ -54,28 +54,28 @@
 
         <ion-item color="fundo">
           <ion-label>Foto</ion-label>
-          <ion-icon (click)="abrirGaleria()" name="images" slot="end"  ></ion-icon>
-        </ion-item>
-        
-        <ion-item color="fundo">
-          <!-- <ion-input color="fundo" [(ngModel)]="produto.imagem" value="Readonly" readonly>{{downloadUrl | async}}</ion-input> -->
-        <ion-item>        
-
-        <ion-item color="fundo">
-          <ion-label position="floating">Valor</ion-label>
-          <ion-input color="fundo" class="fonteseg" type="text" [(ngModel)]="produto.valor"></ion-input>
+          <ion-icon (click)="abrirGaleria()" name="images" slot="end"></ion-icon>
         </ion-item>
 
         <ion-item color="fundo">
-          <ion-label>Bar</ion-label>
-          <ion-select color="fundo" [(ngModel)]="produto.nomeBar">
-            <ion-select-option *ngFor="let bar of bares">{{bar.nomeBar}}</ion-select-option>
-          </ion-select>
+          <ion-input color="fundo" [(ngModel)]="produto.imagem" value="Readonly" readonly>{{downloadUrl | async}}</ion-input>
         </ion-item>
 
-        <ion-button (click)="salvarProd()" color="laranja" expand="block">
-          Salvar produto
-        </ion-button>
+            <ion-item color="fundo">
+              <ion-label position="floating">Valor</ion-label>
+              <ion-input color="fundo" class="fonteseg" type="text" [(ngModel)]="produto.valor"></ion-input>
+            </ion-item>
+
+            <ion-item color="fundo">
+              <ion-label>Bar</ion-label>
+              <ion-select color="fundo" [(ngModel)]="produto.nomeBar">
+                <ion-select-option *ngFor="let bar of bares">{{bar.nomeBar}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-button (click)="salvarProd()" color="laranja" expand="block">
+              Salvar produto
+            </ion-button>
       </div>
 
     </ion-list>
