@@ -7,8 +7,6 @@ import { AuthService } from '../servicos/auth.service';
 import * as firebase from 'firebase/app';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
 
 
 @Component({
@@ -30,7 +28,6 @@ export class LoginPage implements OnInit {
     public dados: DadosBarService,
     public afa: AngularFireAuth,
     private fb: Facebook,
-    private google: GooglePlus,
     public platform: Platform,
     public menuCtrl: MenuController,
     private ds: DadosBarService,
@@ -116,21 +113,6 @@ export class LoginPage implements OnInit {
       this.loading.dismiss();
     }
   };
-
-
-  loginGoogle() {
-    this.google.login({}).then((res) => {
-      this.dadosGG = res;
-    }, (err) => {
-
-    })
-  }
-
-  logout() {
-    this.google.logout();
-    alert("flw");
-  }
-
 
 
   facebookLogin() {

@@ -7,7 +7,7 @@ export interface Bar {
     desc?: string;
     telefone?: string;
     horario?: string;
-    imagem?: string;
+    imagem?: any;
     rua?: string;
     numero?: number;
     bairro?: string;

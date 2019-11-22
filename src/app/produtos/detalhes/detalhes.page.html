@@ -28,8 +28,8 @@
 
     <ion-list color="fundo" *ngSwitchCase="'produtos'">
 
-      <ion-card *ngIf="downloadUrl | async" (click)="abrirGaleria()">
-        <img [src]="downloadUrl | async" />
+      <ion-card *ngIf="downloadUrlProduto | async" (click)="abrirGaleriaProduto()">
+        <img [src]="downloadUrlProduto | async" />
       </ion-card>
 
       <div class="margin">
@@ -54,7 +54,7 @@
 
         <ion-item color="fundo">
           <ion-label>Foto</ion-label>
-          <ion-icon (click)="abrirGaleria()" name="images" slot="end"></ion-icon>
+          <ion-icon (click)="abrirGaleriaProduto()" name="images" slot="end"></ion-icon>
         </ion-item>
 
         <ion-item color="fundo">
@@ -120,10 +120,10 @@
     <ion-list color="fundo" *ngSwitchCase="'bar'">
 
       <div class="margin">
-        <ion-item color="fundo">
-          <ion-label position="floating">Id</ion-label>
-          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.idBar"></ion-input>
-        </ion-item>
+
+          <div class="div" *ngIf="downloadUrlBar | async" (click)="abrirGaleriaBar()">
+              <img class="img" [src]="downloadUrlBar | async" />>
+            </div>
 
         <ion-item color="fundo">
           <ion-label position="floating">Nome</ion-label>
@@ -146,9 +146,13 @@
         </ion-item>
 
         <ion-item color="fundo">
-          <ion-label position="floating">Imagem</ion-label>
-          <ion-input color="fundo" class="fonteseg" [(ngModel)]="bar.imagem"></ion-input>
-        </ion-item>
+            <ion-label>Imagem</ion-label>
+            <ion-icon (click)="abrirGaleriaBar()" name="images" slot="end"></ion-icon>
+          </ion-item>
+  
+          <ion-item color="fundo">
+            <ion-input color="fundo" [(ngModel)]="bar.imagem" value="Readonly" readonly>{{downloadUrl | async}}</ion-input>
+          </ion-item>
 
         <ion-item color="fundo">
           <ion-label position="floating">Rua</ion-label>

@@ -97,8 +97,6 @@
         <splash height="1125" src="resources/ios/splash/Default-Landscape-2436h.png" width="2436" />
     </platform>
     <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyA59CQWSn7f55kUCDpQX2dUKaYM9SHIkqI" />
-    <engine name="android" spec="8.1.0" />
-    <engine name="browser" spec="^6.0.0" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.1" />
     <plugin name="cordova-plugin-googlemaps" spec="git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyA59CQWSn7f55kUCDpQX2dUKaYM9SHIkqI" />
@@ -118,13 +116,12 @@
         <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="5.5.1" />
     </plugin>
-    <plugin name="cordova-plugin-googleplus" spec="^8.2.0">
-        <variable name="PLAY_SERVICES_VERSION" value="15.0.1" />
-    </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.6.2">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
     </plugin>
     <plugin name="cordova-plugin-chooser" spec="^1.2.5" />
     <plugin name="cordova-plugin-camera" spec="^4.1.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.2" />
+    <engine name="android" spec="8.1.0" />
+    <engine name="browser" spec="6.0.0" />
 </widget>

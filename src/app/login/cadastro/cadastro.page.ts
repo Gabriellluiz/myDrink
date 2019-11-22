@@ -4,15 +4,18 @@ import { Router } from '../../../../node_modules/@angular/router';
 import { ComparaValidator } from '../../validador/compara-validator'
 import * as moment from 'moment';
 import { User } from '../../interfaces/user';
-import { ToastController, LoadingController, Platform } from '../../../../node_modules/@ionic/angular';
+import { ToastController, LoadingController } from '../../../../node_modules/@ionic/angular';
 import { AuthService } from '../../servicos/auth.service';
 import { AngularFireAuth } from '../../../../node_modules/@angular/fire/auth';
 import { AngularFirestore } from '../../../../node_modules/@angular/fire/firestore';
-//import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-//import { File } from '@ionic-native/file/ngx';
+
+import { Platform } from '@ionic/angular';
+import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cadastro',
@@ -22,7 +25,8 @@ import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 export class CadastroPage implements OnInit {
   public fileObj: ChooserResult;
   public porcentUp: Observable<number>;
-  public downloadUrl: Observable<string>;
+  public downloadUrlUser: Observable<string>;
+
   public user: any = {};
   public userRegister: User = {};
   private loading: any;
@@ -43,8 +47,7 @@ export class CadastroPage implements OnInit {
     ],
     senha: [
       { tipo: 'required', mensagem: 'O campo Senha é obrigatório.' },
-      { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres.' },
-      { tipo: 'maxlength', mensagem: 'A senha deve ter no máximo 8 caractéres.' }
+      { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres.' }      
     ],
     confirmaSenha: [
       { tipo: 'required', mensagem: 'É obrigatório confirmar senha.' },
@@ -54,24 +57,26 @@ export class CadastroPage implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private chooser: Chooser,
     private rota: Router,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private authService: AuthService,
     private afa: AngularFireAuth,
     private afs: AngularFirestore,
-    //private camera: Camera,
+
+    private chooser: Chooser,
+    private camera: Camera,
     private platform: Platform,
-    //private file: File,
+    private file: File,
     private afStorage: AngularFireStorage
   ) {
     this.formCadastro = formBuilder.group({
       // Declara os campos do formulário.
       nome: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      foto: [''],
       dataNascimento: ['', Validators.compose([Validators.required, Validators.pattern(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/)])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      senha: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(8), Validators.required])],
+      senha: ['', Validators.compose([Validators.minLength(6), Validators.required])],
       confirmaSenha: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     }, {
         validator: ComparaValidator('senha', 'confirmaSenha')
@@ -80,14 +85,8 @@ export class CadastroPage implements OnInit {
 
   ngOnInit() {
   }
-  pickFile(){
-    this.chooser.getFile("image/jpeg").then((value: ChooserResult) => {
-      this.fileObj = value;
-    },(err)=>{
-      alert(JSON.stringify(err));
-    })
-  }
-  /*async abrirGaleria(){
+
+  async abrirGaleriaUser(){
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -111,21 +110,30 @@ export class CadastroPage implements OnInit {
       const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
       const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
       
-      this.uploadFoto(blob);
+      this.uploadFotoUser(blob);
     }catch(error) {
       console.log(error);
     }
   }
 
-  uploadFoto(blob: Blob){
-    const ref = this.afStorage.ref('Usuarios/ionic.jpg');
+
+  uploadFotoUser(blob: Blob){
+    const ref = this.afStorage.ref('Usuarios/' + this.createFileName());
     const task = ref.put(blob);
 
     this.porcentUp = task.percentageChanges();
     task. snapshotChanges().pipe(
-      finalize(() => this.downloadUrl = ref.getDownloadURL())
+      finalize(() => this.downloadUrlUser = ref.getDownloadURL())
     ).subscribe();
-  }*/
+  }
+
+  createFileName() {
+    var d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+  
 
   public exibirForm() {
     console.log(this.formCadastro);

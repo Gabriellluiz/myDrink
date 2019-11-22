@@ -3,4 +3,5 @@ export interface User {
     dataNasc?: string;
     usuario?: string;
     senha?: string;
+    foto?: any;
 }

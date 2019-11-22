@@ -29,7 +29,8 @@ import { finalize } from 'rxjs/operators';
 export class DetalhesPage implements OnInit {
   public fileObj: ChooserResult;
   public porcentUp: Observable<number>;
-  public downloadUrl: Observable<string>;
+  public downloadUrlProduto: Observable<string>;
+  public downloadUrlBar: Observable<string>;
   private loading: any;
   
   private produto: Produtos= {};
@@ -257,7 +258,7 @@ export class DetalhesPage implements OnInit {
     return this.loading.present();
   }
 
-  async abrirGaleria(){
+  async abrirGaleriaProduto(){
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -281,20 +282,61 @@ export class DetalhesPage implements OnInit {
       const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
       const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
       
-      this.uploadFoto(blob);
+      this.uploadFotoPrduto(blob);
     }catch(error) {
       console.log(error);
     }
   }
 
 
-  uploadFoto(blob: Blob){
+  uploadFotoPrduto(blob: Blob){
     const ref = this.afStorage.ref('Produtos/' + this.createFileName());
     const task = ref.put(blob);
 
     this.porcentUp = task.percentageChanges();
     task. snapshotChanges().pipe(
-      finalize(() => this.downloadUrl = ref.getDownloadURL())
+      finalize(() => this.downloadUrlProduto = ref.getDownloadURL())
+    ).subscribe();
+  }
+
+  async abrirGaleriaBar(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true
+    };
+
+    try{
+      const fileUrl: string = await this.camera.getPicture(options);
+
+      let file: string;
+
+      if(this.platform.is('ios')){
+        file = fileUrl.split('/').pop();
+      }else {
+        file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
+      }
+
+      const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
+
+      const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
+      const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
+      
+      this.uploadFotoBar(blob);
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+
+  uploadFotoBar(blob: Blob){
+    const ref = this.afStorage.ref('Bar/' + this.createFileName());
+    const task = ref.put(blob);
+
+    this.porcentUp = task.percentageChanges();
+    task. snapshotChanges().pipe(
+      finalize(() => this.downloadUrlBar = ref.getDownloadURL())
     ).subscribe();
   }
 
