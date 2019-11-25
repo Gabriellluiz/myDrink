@@ -112,7 +112,7 @@ export class CadastroPage implements OnInit {
       
       this.uploadFotoUser(blob);
     }catch(error) {
-      console.log(error);
+      alert(error);
     }
   }
 

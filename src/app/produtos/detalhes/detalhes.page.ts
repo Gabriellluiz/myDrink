@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Produtos } from '../../interfaces/produtos';
 import { LoadingController, ToastController, NavController, IonSlides } from '../../../../node_modules/@ionic/angular';
 import { AuthService } from '../../servicos/auth.service';
@@ -32,27 +32,27 @@ export class DetalhesPage implements OnInit {
   public downloadUrlProduto: Observable<string>;
   public downloadUrlBar: Observable<string>;
   private loading: any;
-  
-  private produto: Produtos= {};
+
+  private produto: Produtos = {};
   private produtoId: string = null;
   private productSubscription: Subscription;
 
-  private bar: Bar={};
-  private bares= new Array<Bar>();
+  private bar: Bar = {};
+  private bares = new Array<Bar>();
   private barId: string = null;
   private barSubscription: Subscription;
 
-  private cat: Categoria={};
-  private cats= new Array<Categoria>();
+  private cat: Categoria = {};
+  private cats = new Array<Categoria>();
   private catId: string = null;
   private catSubscription: Subscription;
 
-  private sub: Subcategoria={};
-  private subs= new Array<Subcategoria>();
+  private sub: Subcategoria = {};
+  private subs = new Array<Subcategoria>();
   private subId: string = null;
   private subSubscription: Subscription;
-  
-  
+
+
 
   constructor(private loadingCtrl: LoadingController,
     private chooser: Chooser,
@@ -69,13 +69,13 @@ export class DetalhesPage implements OnInit {
     private platform: Platform,
     private file: File,
     private afStorage: AngularFireStorage
-  ) { 
+  ) {
 
     this.barId = this.activatedRoute.snapshot.params['idBar'];
     if (this.barId) this.loadBar();
 
     this.produtoId = this.activatedRoute.snapshot.params['id'];
-    if (this.produtoId) this.loadProduct();   
+    if (this.produtoId) this.loadProduct();
 
     this.catSubscription = this.catService.getCategorias().subscribe(data => {
       this.cats = data;
@@ -98,42 +98,44 @@ export class DetalhesPage implements OnInit {
     if (this.barSubscription) this.barSubscription.unsubscribe();
   }
 
-  pickFile(){
+  pickFile() {
     this.chooser.getFile("image/jpeg").then((value: ChooserResult) => {
       this.fileObj = value;
-    },(err)=>{
+    }, (err) => {
       alert(JSON.stringify(err));
     })
   }
-  
-  loadProduct(){
+
+  loadProduct() {
     this.productSubscription = this.prodService.getProdut(this.produtoId).subscribe(data => {
       this.produto = data;
     });
   }
 
-  loadCat(){
+  loadCat() {
     this.subSubscription = this.catService.getCategoria(this.catId).subscribe(data => {
       this.cat = data;
     });
   }
 
-  loadSubCat(){
+  loadSubCat() {
     this.catSubscription = this.subCatService.getSub(this.subId).subscribe(data => {
       this.sub = data;
     });
   }
 
-  loadBar(){
+  loadBar() {
     this.barSubscription = this.barService.getBar(this.barId).subscribe(data => {
       this.bar = data;
     });
   }
 
-  async salvarProd(){
+  async salvarProd() {
     await this.presentLoading();
 
     this.produto.userId = this.authService.getAuth().currentUser.uid;
+
+    this.produto.imagem = this.downloadUrlProduto;
 
     if (this.produtoId) {
       try {
@@ -142,6 +144,7 @@ export class DetalhesPage implements OnInit {
 
         this.navCtrl.navigateBack('/list');
       } catch (error) {
+        console.log(error)
         this.presentToast('Erro ao tentar salvar');
         this.loading.dismiss();
       }
@@ -160,7 +163,7 @@ export class DetalhesPage implements OnInit {
     }
   }
 
-  async salvarCat(){
+  async salvarCat() {
     await this.presentLoading();
 
     this.cat.userId = this.authService.getAuth().currentUser.uid;
@@ -191,7 +194,7 @@ export class DetalhesPage implements OnInit {
   }
 
 
-  async salvarSubCat(){
+  async salvarSubCat() {
     await this.presentLoading();
 
     this.sub.userId = this.authService.getAuth().currentUser.uid;
@@ -222,7 +225,7 @@ export class DetalhesPage implements OnInit {
   }
 
 
-  async salvarBar(){
+  async salvarBar() {
     await this.presentLoading();
 
     this.bar.userId = this.authService.getAuth().currentUser.uid;
@@ -258,7 +261,7 @@ export class DetalhesPage implements OnInit {
     return this.loading.present();
   }
 
-  async abrirGaleriaProduto(){
+  async abrirGaleriaProduto() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -266,40 +269,42 @@ export class DetalhesPage implements OnInit {
       correctOrientation: true
     };
 
-    try{
+    try {
       const fileUrl: string = await this.camera.getPicture(options);
 
       let file: string;
 
-      if(this.platform.is('ios')){
+      if (this.platform.is('ios')) {
         file = fileUrl.split('/').pop();
-      }else {
+      } else {
         file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
       }
 
       const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
 
       const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
-      const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
-      
-      this.uploadFotoPrduto(blob);
-    }catch(error) {
-      console.log(error);
+      const blob: Blob = new Blob([buffer], { type: 'image/jpeg' });
+
+      this.uploadFotoProduto(blob);
+    } catch (error) {
+      alert(error);
     }
   }
 
 
-  uploadFotoPrduto(blob: Blob){
+  uploadFotoProduto(blob: Blob) {
     const ref = this.afStorage.ref('Produtos/' + this.createFileName());
     const task = ref.put(blob);
 
     this.porcentUp = task.percentageChanges();
-    task. snapshotChanges().pipe(
-      finalize(() => this.downloadUrlProduto = ref.getDownloadURL())
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        this.downloadUrlProduto = ref.getDownloadURL()
+      })
     ).subscribe();
   }
 
-  async abrirGaleriaBar(){
+  async abrirGaleriaBar() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -307,35 +312,35 @@ export class DetalhesPage implements OnInit {
       correctOrientation: true
     };
 
-    try{
+    try {
       const fileUrl: string = await this.camera.getPicture(options);
 
       let file: string;
 
-      if(this.platform.is('ios')){
+      if (this.platform.is('ios')) {
         file = fileUrl.split('/').pop();
-      }else {
+      } else {
         file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
       }
 
       const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
 
       const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
-      const blob: Blob = new Blob([buffer], {type: 'image/jpeg'});
-      
+      const blob: Blob = new Blob([buffer], { type: 'image/jpeg' });
+
       this.uploadFotoBar(blob);
-    }catch(error) {
-      console.log(error);
+    } catch (error) {
+      alert(error);
     }
   }
 
 
-  uploadFotoBar(blob: Blob){
+  uploadFotoBar(blob: Blob) {
     const ref = this.afStorage.ref('Bar/' + this.createFileName());
     const task = ref.put(blob);
 
     this.porcentUp = task.percentageChanges();
-    task. snapshotChanges().pipe(
+    task.snapshotChanges().pipe(
       finalize(() => this.downloadUrlBar = ref.getDownloadURL())
     ).subscribe();
   }
