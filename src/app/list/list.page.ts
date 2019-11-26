@@ -8,6 +8,7 @@ import { ProdutosService } from '../servicos/produtos.service';
 
 import { BarService } from '../servicos/bar.service';
 import { Bar } from '../interfaces/bar';
+import { Platform } from '@ionic/angular';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Bar } from '../interfaces/bar';
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
-
+  subscrible: any;
   public produtos = new Array<Produtos>();
   private productsSubscription: Subscription;
 
@@ -24,9 +25,11 @@ export class ListPage implements OnInit {
   private barSubscription: Subscription;
 
 
-  constructor(private rota: Router,
+  constructor(private router: Router,
     private produtosService: ProdutosService,
-    private barService: BarService
+    private barService: BarService,
+    public platform: Platform
+
   ) {
 
     this.barSubscription = this.barService.getBares().subscribe(data => {
@@ -36,6 +39,11 @@ export class ListPage implements OnInit {
       this.produtos = data;
     })
 
+    this.subscrible = this.platform.backButton.subscribeWithPriority(99999999, () => {
+      if (window.location.pathname == "/list") {
+        router.navigateByUrl('/home')
+      }
+    });
 
   }
 

@@ -58,12 +58,12 @@
         </ion-item>
 
         <ion-item color="fundo">
-          <ion-label>Progresso de Upload: {{porcentUp | async}}</ion-label>
+          <ion-label>Progresso de Upload: {{porcentUp | async}} %</ion-label>
         </ion-item>
 
         <ion-item color="fundo">
-          <p color="fundo">{{downloadUrlProduto | async}}</p>
-        </ion-item><!-- [(ngModel)]="produto.imagem"-->
+        <ion-input  [(ngModel)]="produto.imagem" value="{{downloadUrlProduto | async}}" readonly></ion-input>
+        </ion-item>
 
         <ion-item color="fundo">
           <ion-label position="floating">Valor</ion-label>
@@ -154,12 +154,12 @@
           <ion-icon (click)="abrirGaleriaBar()" name="images" slot="end"></ion-icon>
         </ion-item>
 
-        <ion-item>
+        <ion-item color="fundo">
           <ion-label>Progresso de Upload: {{porcentUp | async}}</ion-label>
         </ion-item>
 
         <ion-item color="fundo">
-          <ion-input color="fundo" value="Readonly" readonly>{{downloadUrlBar | async}}</ion-input>
+          <ion-input color="fundo" [(ngModel)]="bar.imagem" value="{{downloadUrlBar | async}}" readonly></ion-input>
         </ion-item>
 
         <ion-item color="fundo">

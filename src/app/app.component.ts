@@ -34,11 +34,6 @@ export class AppComponent {
       title: 'Lista de Bares',
       url: '/list',
       icon: 'list'
-    },
-    {
-      title: 'Perfil',
-      url: '/list',
-      icon: 'person'
     }
     
   ];

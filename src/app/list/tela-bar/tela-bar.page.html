@@ -71,6 +71,15 @@
                 Calculadora
               </ion-item-option>
             </ion-item-options>
+
+            <ion-item-options side="start">
+                <ion-item-option (click)="deleteProdut(prod.id)" color="danger">
+                  <h3>
+                    <ion-icon slot="start" name="trash"></ion-icon>
+                  </h3>
+                  Excluir
+                </ion-item-option>
+              </ion-item-options>
           </ion-item-sliding>
         </div>
       </ion-list>

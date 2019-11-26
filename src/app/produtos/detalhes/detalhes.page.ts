@@ -29,6 +29,7 @@ import { finalize } from 'rxjs/operators';
 export class DetalhesPage implements OnInit {
   public fileObj: ChooserResult;
   public porcentUp: Observable<number>;
+  public URLProd: any;
   public downloadUrlProduto: Observable<string>;
   public downloadUrlBar: Observable<string>;
   private loading: any;
@@ -71,6 +72,8 @@ export class DetalhesPage implements OnInit {
     private afStorage: AngularFireStorage
   ) {
 
+    this.downloadUrlProduto = this.URLProd;
+  
     this.barId = this.activatedRoute.snapshot.params['idBar'];
     if (this.barId) this.loadBar();
 
@@ -134,8 +137,6 @@ export class DetalhesPage implements OnInit {
     await this.presentLoading();
 
     this.produto.userId = this.authService.getAuth().currentUser.uid;
-
-    this.produto.imagem = this.downloadUrlProduto;
 
     if (this.produtoId) {
       try {
@@ -299,7 +300,8 @@ export class DetalhesPage implements OnInit {
     this.porcentUp = task.percentageChanges();
     task.snapshotChanges().pipe(
       finalize(() => {
-        this.downloadUrlProduto = ref.getDownloadURL()
+        this.downloadUrlProduto = ref.getDownloadURL();
+        this.URLProd = this.downloadUrlProduto;
       })
     ).subscribe();
   }

@@ -12,24 +12,6 @@
 
   <div class="padding">
     <form [formGroup]="formCadastro">
-
-      <ion-item color="fundo">
-        <ion-avatar *ngIf="downloadUrlUser | async" slot="start">
-          <img [src]="downloadUrlUser | async" />
-        </ion-avatar>
-        <ion-label>Foto de perfil</ion-label>
-        <ion-icon (click)="abrirGaleriaUser()" name="images" slot="end"></ion-icon>
-      </ion-item>
-
-      <ion-item color="fundo">
-        <ion-input color="fundo"  formControlName="foto" readonly>{{downloadUrlUser |
-          async}}</ion-input>
-      </ion-item> <!--[(ngModel)]="userRegister.foto"-->
-
-      <ion-item>
-        <ion-label>Progresso de Upload: {{porcentUp | async}}</ion-label>
-      </ion-item>
-
       <ion-item color="fundo">
         <ion-label class="titulo" position="stacked">Nome completo:</ion-label>
         <ion-input [(ngModel)]="userRegister.nome" formControlName="nome" placeholder="Ex: Gabriel Luiz" type="text"></ion-input>

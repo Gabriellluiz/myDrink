@@ -14,7 +14,7 @@ import { SubcategoriaService } from 'src/app/servicos/subcategoria.service';
 import { Produtos } from 'src/app/interfaces/produtos';
 import { ProdutosService } from 'src/app/servicos/produtos.service';
 import { DadosBarService } from 'src/app/servicos/dados.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Platform } from '@ionic/angular';
 
 
 
@@ -24,6 +24,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./tela-bar.page.scss'],
 })
 export class TelaBarPage implements OnInit {
+  subscrible: any;
   public carrinho = [];
   public bar: Bar = {};
   public bares = new Array<Bar>();
@@ -48,6 +49,7 @@ export class TelaBarPage implements OnInit {
     private subCatService: SubcategoriaService,
     private prodService: ProdutosService,
     private ds: DadosBarService,
+    public platform: Platform,
     private toastCtrl: ToastController) {
 
     this.route.params.subscribe(parametros => {
@@ -70,6 +72,12 @@ export class TelaBarPage implements OnInit {
     this.prodsSubscription = this.prodService.getProduts().subscribe(data => {
       this.prods = data;
     })
+
+    this.subscrible = this.platform.backButton.subscribeWithPriority(999999, () => {
+      if (window.location.pathname == "/tela-bar") {
+        router.navigateByUrl('/list')
+      }
+    });
   }
 
 
@@ -93,6 +101,14 @@ export class TelaBarPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  async deleteProdut(id: string) {
+    try {
+      await this.prodService.deleteProdut(id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
