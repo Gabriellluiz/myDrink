@@ -13,11 +13,11 @@
     <ion-segment-button value="produtos">
       <ion-label class="fonteseg">Produto</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="categoria">
+    <!--<ion-segment-button value="categoria">
       <ion-label class="fonteseg">Categoria</ion-label>
-    </ion-segment-button>
+    </ion-segment-button> -->
     <ion-segment-button value="subCategoria">
-      <ion-label class="fonteseg">Sub-Categoria</ion-label>
+      <ion-label class="fonteseg">Categoria</ion-label>
     </ion-segment-button>
     <ion-segment-button value="bar">
       <ion-label class="fonteseg">Bar</ion-label>
@@ -38,15 +38,15 @@
           <ion-input color="fundo" class="fonteseg" type="text" [(ngModel)]="produto.nome"></ion-input>
         </ion-item>
 
-        <ion-item color="fundo">
+       <!-- <ion-item color="fundo">
           <ion-label>Categoria</ion-label>
           <ion-select color="fundo" [(ngModel)]="produto.nomeCat">
             <ion-select-option *ngFor="let cat of cats">{{cat.nomeCat}}</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item color="fundo">
-          <ion-label>Sub-categoria</ion-label>
+          <ion-label>Categoria</ion-label>
           <ion-select color="fundo" [(ngModel)]="produto.subCategoria">
             <ion-select-option *ngFor="let sub of subs">{{sub.subCategoria}}</ion-select-option>
           </ion-select>
@@ -84,7 +84,7 @@
 
     </ion-list>
 
-    <ion-list color="fundo" *ngSwitchCase="'categoria'">
+   <!-- <ion-list color="fundo" *ngSwitchCase="'categoria'">
 
       <div class="margin">
         <ion-item color="fundo">
@@ -97,7 +97,7 @@
         </ion-button>
       </div>
 
-    </ion-list>
+    </ion-list> -->
 
     <ion-list color="fundo" *ngSwitchCase="'subCategoria'">
 
@@ -107,12 +107,12 @@
           <ion-input color="fundo" class="fonteseg" [(ngModel)]="sub.subCategoria"></ion-input>
         </ion-item>
 
-        <ion-item color="fundo">
+        <!-- <ion-item color="fundo">
           <ion-label>Categoria</ion-label>
           <ion-select color="fundo" [(ngModel)]="sub.nomeCat">
             <ion-select-option *ngFor="let cat of cats">{{cat.nomeCat}}</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
 
         <ion-button color="laranja" expand="block" (click)="salvarSubCat()">
           Salvar Sub-Categoria
