@@ -40,7 +40,7 @@
 
 
   <!-- Tipo de Bebidas -->
-  <ion-segment  [(ngModel)]="segmentoTipo" color="laranja" scrollable>
+  <ion-segment [(ngModel)]="segmentoTipo" color="laranja" scrollable>
     <ion-segment-button *ngFor="let sub of subcats" value="{{sub.subCategoria}}">
       <ion-label class="tipoBebida">{{sub.subCategoria}}</ion-label>
     </ion-segment-button>
@@ -53,7 +53,7 @@
       <ion-list color="fundo" *ngSwitchCase="sub.subCategoria">
         <div *ngFor="let prod of prods">
           <ion-item-sliding color="fundo" *ngIf="(prod.nomeBar === bar.nomeBar) && (prod.subCategoria == sub.subCategoria)">
-            <ion-item button [routerLink]="['/comparar', prod.id]" color="fundo">
+            <ion-item color="fundo">
               <ion-thumbnail slot="start">
                 <img [src]="prod.imagem">
               </ion-thumbnail>
@@ -71,15 +71,22 @@
                 Calculadora
               </ion-item-option>
             </ion-item-options>
-
-            <ion-item-options side="start">
+            <div *ngIf="adm">
+              <ion-item-options side="start">
                 <ion-item-option (click)="deleteProdut(prod.id)" color="danger">
                   <h3>
                     <ion-icon slot="start" name="trash"></ion-icon>
                   </h3>
                   Excluir
                 </ion-item-option>
+                <ion-item-option [routerLink]="['/detalhes', prod.id]" color="light">
+                  <h3>
+                    <ion-icon slot="start" name="sync"></ion-icon>
+                  </h3>
+                  Atualizar
+                </ion-item-option>
               </ion-item-options>
+            </div>
           </ion-item-sliding>
         </div>
       </ion-list>
@@ -87,5 +94,5 @@
 
   </div>
 
- 
+
 </ion-content>

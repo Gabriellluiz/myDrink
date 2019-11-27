@@ -15,6 +15,7 @@ import { Produtos } from 'src/app/interfaces/produtos';
 import { ProdutosService } from 'src/app/servicos/produtos.service';
 import { DadosBarService } from 'src/app/servicos/dados.service';
 import { ToastController, Platform } from '@ionic/angular';
+import * as firebase from 'firebase';
 
 
 
@@ -39,7 +40,8 @@ export class TelaBarPage implements OnInit {
 
   public subcats = new Array<Subcategoria>();
   private subSubscription: Subscription;
-
+  public user = firebase.auth().currentUser;
+  public adm;
 
   constructor(public router: Router,
     private rota: ActivatedRoute,
@@ -61,6 +63,16 @@ export class TelaBarPage implements OnInit {
       }
     });
 
+    if (this.user != null) {
+      this.user.providerData.forEach(function (profile) {
+        console.log("Sign-in provider: " + profile.providerId);
+        console.log("  Provider-specific UID: " + profile.uid);
+        console.log("  Name: " + profile.displayName);
+        console.log("  Email: " + profile.email);
+        console.log("  Photo URL: " + profile.photoURL);
+      });
+    }
+
     this.catSubscription = this.catService.getCategorias().subscribe(data => {
       this.categorias = data;
     });
@@ -73,13 +85,18 @@ export class TelaBarPage implements OnInit {
       this.prods = data;
     })
 
-    this.subscrible = this.platform.backButton.subscribeWithPriority(999999, () => {
+    /*this.subscrible = this.platform.backButton.subscribeWithPriority(999999, () => {
       if (window.location.pathname == "/tela-bar") {
         router.navigateByUrl('/list')
       }
-    });
+    });*/
   }
 
+  ionViewWillEnter(){
+    if(this.user.email == 'adm@mydrink.com'){
+      this.adm = this.user.email
+    }
+  }
 
   ngOnInit() {}
 

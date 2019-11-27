@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-        <h3>
-          <ion-icon routerLink="/detalhes" class="icon" name="add"></ion-icon>
-        </h3>
-      </ion-buttons>
+    <ion-buttons *ngIf="adm" slot="end">
+      <h3>
+        <ion-icon routerLink="/detalhes" class="icon" name="add"></ion-icon>
+      </h3>
+    </ion-buttons>
     <ion-title>
       Lista de Bares
     </ion-title>
@@ -16,31 +16,36 @@
 
 <ion-content color="fundo">
 
-  <ion-refresher  slot="fixed" (ionRefresh)="doSomething($event)">
-    <ion-refresher-content  pullingIcon="arrow-dropdown" refreshingSpinner="circles" refreshingText="Recarregando...">
+  <ion-refresher slot="fixed" (ionRefresh)="doSomething($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="circles" refreshingText="Recarregando...">
     </ion-refresher-content>
   </ion-refresher>
 
 
-    <ion-list lines="undefined" color="fundo">
-        <ion-item-sliding *ngFor="let bar of bares">
-        <ion-item color="fundo" [routerLink]="['/tela-bar', bar.id]" >
-          <ion-avatar slot="start">
-            <img [src]="bar.imagem">
-          </ion-avatar>
-          <ion-label>
-            <h2>{{bar.nomeBar}}</h2>
-            <p>{{bar.desc}}</p>
-          </ion-label>
-        </ion-item>
-
+  <ion-list lines="undefined" color="fundo">
+    <ion-item-sliding *ngFor="let bar of bares">
+      <ion-item color="fundo" [routerLink]="['/tela-bar', bar.id]">
+        <ion-avatar slot="start">
+          <img [src]="bar.imagem">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{bar.nomeBar}}</h2>
+          <p>{{bar.desc}}</p>
+        </ion-label>
+      </ion-item>
+      <div *ngIf="adm">
         <ion-item-options side="end">
-            <ion-item-option color="danger" (click)="deleteBar(bar.id)">
-              <ion-icon slot="top" name="trash"></ion-icon>
-              Excluir
-            </ion-item-option>
-          </ion-item-options>
-      </ion-item-sliding>
-      </ion-list>
-      
+          <ion-item-option color="danger" (click)="deleteBar(bar.id)">
+            <ion-icon slot="top" name="trash"></ion-icon>
+            Excluir
+          </ion-item-option>
+          <ion-item-option color="light" [routerLink]="['/detalhes', bar.id]">
+            <ion-icon slot="top" name="sync"></ion-icon>
+            Atualizar
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+    </ion-item-sliding>
+  </ion-list>
+
 </ion-content>

@@ -49,7 +49,7 @@ export class AppComponent {
     private userService: UsuarioService
   ) {
     this.initializeApp();
-    console.log("alguma coisa",this.user);
+    
 
     if (this.user != null) {
       this.user.providerData.forEach(function (profile) {

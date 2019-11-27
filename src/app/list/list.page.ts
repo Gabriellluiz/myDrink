@@ -8,7 +8,10 @@ import { ProdutosService } from '../servicos/produtos.service';
 
 import { BarService } from '../servicos/bar.service';
 import { Bar } from '../interfaces/bar';
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
+import { UsuarioService } from '../servicos/usuario.service';
+import * as firebase from 'firebase';
+
 
 
 @Component({
@@ -24,11 +27,15 @@ export class ListPage implements OnInit {
   public bares = new Array<Bar>();
   private barSubscription: Subscription;
 
+  public user = firebase.auth().currentUser;
+  public adm;
 
   constructor(private router: Router,
     private produtosService: ProdutosService,
     private barService: BarService,
-    public platform: Platform
+    public platform: Platform,
+    private userService: UsuarioService,
+    private navCtrl: NavController
 
   ) {
 
@@ -39,14 +46,30 @@ export class ListPage implements OnInit {
       this.produtos = data;
     })
 
-    this.subscrible = this.platform.backButton.subscribeWithPriority(99999999, () => {
+    /*this.subscrible = this.platform.backButton.subscribeWithPriority(999999, () => {
       if (window.location.pathname == "/list") {
-        router.navigateByUrl('/home')
+        this.navCtrl.navigateBack('/home');
       }
-    });
+    });*/
+    
+  
+    if (this.user != null) {
+      this.user.providerData.forEach(function (profile) {
+        console.log("Sign-in provider: " + profile.providerId);
+        console.log("  Provider-specific UID: " + profile.uid);
+        console.log("  Name: " + profile.displayName);
+        console.log("  Email: " + profile.email);
+        console.log("  Photo URL: " + profile.photoURL);
+      });
+    }
 
   }
 
+  ionViewWillEnter(){
+    if(this.user.email == 'adm@mydrink.com'){
+      this.adm = this.user.email
+    }
+  }
   
 
   async deleteProdut(id: string) {
@@ -67,6 +90,7 @@ export class ListPage implements OnInit {
 
   
   ngOnInit() {
+
   }
 
 

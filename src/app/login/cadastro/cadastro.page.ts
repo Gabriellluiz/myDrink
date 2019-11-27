@@ -47,7 +47,8 @@ export class CadastroPage implements OnInit {
     ],
     senha: [
       { tipo: 'required', mensagem: 'O campo Senha é obrigatório.' },
-      { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres.' }      
+      { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres.' },
+      { tipo: 'maxlength', mensagem: 'A senha deve ter no máximo 16 caracteres.' }      
     ],
     confirmaSenha: [
       { tipo: 'required', mensagem: 'É obrigatório confirmar senha.' },
@@ -73,10 +74,9 @@ export class CadastroPage implements OnInit {
     this.formCadastro = formBuilder.group({
       // Declara os campos do formulário.
       nome: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      foto: [''],
       dataNascimento: ['', Validators.compose([Validators.required, Validators.pattern(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/)])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      senha: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+      senha: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(16), Validators.required])],
       confirmaSenha: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     }, {
         validator: ComparaValidator('senha', 'confirmaSenha')

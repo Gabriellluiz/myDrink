@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
 
     this.subscrible = this.platform.backButton.subscribeWithPriority(1, () => {
       if (window.location.pathname == "/login") {
-        if (window.confirm("Deseja sair?")) {
+        if (window.confirm("Deseja sair do aplicativo?")) {
           navigator["app"].exitApp();
         }
       }

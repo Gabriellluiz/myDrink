@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
 
     this.subscrible = this.platform.backButton.subscribeWithPriority(1, () => {
       if (window.location.pathname == "/home") {
-        if (window.confirm("Deseja sair?")) {
+        if (window.confirm("Deseja sair do aplicativo?")) {
           navigator["app"].exitApp();
         }
       }
