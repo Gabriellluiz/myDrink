@@ -77,7 +77,7 @@ export class AppComponent {
 
   shareApp(){
     var appUrl = "https://play.google.com/store/apps/details?id=com.gabrielluiz.mydrink";
-    this.socialShare.share("Baixe o app Mydrink, e se divirta!","","",appUrl).then(()=> {
+    this.socialShare.share("Baixe o app MyDrink, e se divirta!","","",appUrl).then(()=> {
     })
   }
 
